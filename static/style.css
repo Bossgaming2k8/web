@@ -2,8 +2,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #e9ebee;
     
-    /* Các dòng code mới để thêm hình ảnh nền */
-    background-image: url('background.jpg'); /* Thay 'background.jpg' bằng tên file của bạn */
+    /* Cấu hình cho hình ảnh nền */
+    background-image: url('background.gif'); /* Thay đổi tên file tại đây */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -20,7 +20,7 @@ body {
 .login-container, .dashboard-container {
     width: 350px;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.85); /* Thêm độ trong suốt để nhìn thấy nền */
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     text-align: center;
