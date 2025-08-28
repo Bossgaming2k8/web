@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #e9ebee;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.5s ease;
 }
 
 .login-container, .dashboard-container {
@@ -13,8 +14,9 @@ body {
     padding: 30px;
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     text-align: center;
+    transition: all 0.5s ease;
 }
 
 h2 {
@@ -40,12 +42,13 @@ h2 {
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-group input:focus {
     outline: none;
     border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 button {
@@ -57,16 +60,19 @@ button {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .error-message {
     color: #e74c3c;
     margin-bottom: 15px;
+    opacity: 0;
+    animation: fade-in 0.5s forwards;
 }
 
 .dashboard-container h1 {
@@ -87,9 +93,21 @@ button:hover {
     color: white;
     text-decoration: none;
     border-radius: 8px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .logout-link:hover {
     background-color: #5a6268;
+}
+
+/* Hiệu ứng động */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
