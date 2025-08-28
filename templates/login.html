@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>HASH TECHIE OFFICIAL</title>
 </head>
 <body>
-    <div class="login-container">
-        <form action="/" method="post" class="login-form">
-            <h2>Đăng nhập</h2>
-            {% if error %}
-                <p class="error-message">{{ error }}</p>
-            {% endif %}
-            <div class="input-group">
-                <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="{{ url_for('login') }}" method="post">
+                    <h2>Login</h2>
+                    {% if error %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endif %}
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="text" name="username" required>
+                        <label for="">Email</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" name="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="forget">
+                        <label for=""><input type="checkbox">Remember Me  <a href="#">Forget Password</a></label>
+                      
+                    </div>
+                    <button type="submit">Log in</button>
+                    <div class="register">
+                        <p>Don't have a account <a href="#">Register</a></p>
+                    </div>
+                </form>
             </div>
-            <div class="input-group">
-                <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
-            </div>
-            <button type="submit">Đăng nhập</button>
-        </form>
-    </div>
+        </div>
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
