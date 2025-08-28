@@ -16,7 +16,7 @@ class User(UserMixin):
         self.id = id
 
 # Cấu hình user cố định
-user_data = {'av101': {'av101': 'av101'}}
+user_data = {'admin': {'av101': 'av101'}}
 
 # Hàm load user cho Flask-Login
 @login_manager.user_loader
