@@ -3,14 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Bảng Điều Khiển</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>Chào mừng, {{ username }}!</h1>
-        <p>Bạn đã đăng nhập thành công.</p>
+        <h1>Bảng Điều Khiển</h1>
+        <p>Chào mừng, {{ current_user.id }}!</p>
         <a href="{{ url_for('logout') }}" class="logout-link">Đăng xuất</a>
+        
+        <div class="requests-list">
+            <h2>Danh Sách Yêu Cầu</h2>
+            {% if requests %}
+            <ul>
+            {% for req in requests %}
+                <li class="request-item {% if req['status'] == 'approved' %}approved{% else %}pending{% endif %}">
+                    <span class="request-info">ID: {{ req['id'] }} | Trạng thái: {{ req['status'] }}</span>
+                    <span class="request-time">Thời gian: {{ req['created_at'].strftime('%Y-%m-%d %H:%M:%S') }}</span>
+                    {% if req['status'] == 'pending' %}
+                        <button onclick="approveRequest({{ req['id'] }})">Duyệt</button>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>Không có yêu cầu nào.</p>
+            {% endif %}
+        </div>
     </div>
+
+    <script>
+        function approveRequest(requestId) {
+            fetch(`/api/approve/${requestId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            }).then(data => {
+                alert(data.message);
+                window.location.reload();
+            }).catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                alert('Có lỗi xảy ra khi duyệt yêu cầu.');
+            });
+        }
+    </script>
 </body>
 </html>
