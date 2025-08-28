@@ -1,120 +1,125 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e9ebee;
-    
-    /* Cấu hình cho hình ảnh nền */
-    background-image: url('background.gif'); /* Thay đổi tên file tại đây */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins',sans-serif;
+}
+section{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    transition: background-color 0.5s ease;
+    min-height: 100vh;
+    width: 100%;
+    
+    background: url('background6.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
 }
+.form-box{
+    position: relative;
+    width: 400px;
+    height: 450px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.login-container, .dashboard-container {
-    width: 350px;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+h2{
+    font-size: 2em;
+    color: #fff;
     text-align: center;
-    transition: all 0.5s ease;
+}
+.inputbox{
+    position: relative;
+    margin: 30px 0;
+    width: 310px;
+    border-bottom: 2px solid #fff;
+}
+.inputbox label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1em;
+    pointer-events: none;
+    transition: .5s;
+}
+input:focus ~ label,
+input:valid ~ label{
+top: -5px;
+}
+.inputbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding:0 35px 0 5px;
+    color: #fff;
+}
+.inputbox ion-icon{
+    position: absolute;
+    right: 8px;
+    color: #fff;
+    font-size: 1.2em;
+    top: 20px;
+}
+.forget{
+    margin: -15px 0 15px ;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;  
 }
 
-h2 {
-    color: #333;
-    margin-bottom: 25px;
+.forget label input{
+    margin-right: 3px;
+    
+}
+.forget label a{
+    color: #fff;
+    text-decoration: none;
+}
+.forget label a:hover{
+    text-decoration: underline;
+}
+button{
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
     font-weight: 600;
 }
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.register{
+    font-size: .9em;
+    color: #fff;
+    text-align: center;
+    margin: 25px 0 10px;
 }
-
-.input-group {
-    width: 100%;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.input-group input:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.error-message {
-    color: #e74c3c;
-    margin-bottom: 15px;
-    opacity: 0;
-    animation: fade-in 0.5s forwards;
-}
-
-.dashboard-container h1 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.dashboard-container p {
-    color: #555;
-    font-size: 18px;
-}
-
-.logout-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #6c757d;
-    color: white;
+.register p a{
     text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: 600;
 }
-
-.logout-link:hover {
-    background-color: #5a6268;
+.register p a:hover{
+    text-decoration: underline;
 }
-
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.error-message {
+    font-size: .9em;
+    color: #ff5733; /* Màu đỏ nổi bật cho thông báo lỗi */
+    text-align: center;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 5px;
 }
