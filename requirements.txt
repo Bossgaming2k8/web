@@ -1,2 +1,4 @@
+python_version == 3.11
+
 Flask
 Flask-Login
