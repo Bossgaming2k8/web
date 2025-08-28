@@ -1,6 +1,14 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #e9ebee;
+    
+    /* Các dòng code mới để thêm hình ảnh nền */
+    background-image: url('background.jpg'); /* Thay 'background.jpg' bằng tên file của bạn */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +20,7 @@ body {
 .login-container, .dashboard-container {
     width: 350px;
     padding: 30px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.85); /* Thêm độ trong suốt để nhìn thấy nền */
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     text-align: center;
@@ -100,7 +108,6 @@ button:hover {
     background-color: #5a6268;
 }
 
-/* Hiệu ứng động */
 @keyframes fade-in {
     from {
         opacity: 0;
