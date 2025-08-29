@@ -1,45 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: 'poppins',sans-serif;
+    font-family: 'poppins', sans-serif;
 }
-section{
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     width: 100%;
     
-    background: url('background6.jpg')no-repeat;
+    background: url('background6.jpg') no-repeat;
     background-position: center;
     background-size: cover;
 }
-.form-box{
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.form-box {
     position: relative;
     width: 400px;
     height: 450px;
     background: transparent;
-    border: 2px solid rgba(255,255,255,0.5);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(15px);
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-h2{
+
+h2 {
     font-size: 2em;
     color: #fff;
     text-align: center;
 }
-.inputbox{
+
+.inputbox {
     position: relative;
     margin: 30px 0;
     width: 310px;
     border-bottom: 2px solid #fff;
 }
-.inputbox label{
+
+.inputbox label {
     position: absolute;
     top: 50%;
     left: 5px;
@@ -49,10 +61,12 @@ h2{
     pointer-events: none;
     transition: .5s;
 }
+
 input:focus ~ label,
-input:valid ~ label{
-top: -5px;
+input:valid ~ label {
+    top: -5px;
 }
+
 .inputbox input {
     width: 100%;
     height: 50px;
@@ -60,36 +74,40 @@ top: -5px;
     border: none;
     outline: none;
     font-size: 1em;
-    padding:0 35px 0 5px;
+    padding: 0 35px 0 5px;
     color: #fff;
 }
-.inputbox ion-icon{
+
+.inputbox ion-icon {
     position: absolute;
     right: 8px;
     color: #fff;
     font-size: 1.2em;
     top: 20px;
 }
-.forget{
-    margin: -15px 0 15px ;
+
+.forget {
+    margin: -15px 0 15px;
     font-size: .9em;
     color: #fff;
     display: flex;
-    justify-content: space-between;  
+    justify-content: space-between;
 }
 
-.forget label input{
+.forget label input {
     margin-right: 3px;
-    
 }
-.forget label a{
+
+.forget label a {
     color: #fff;
     text-decoration: none;
 }
-.forget label a:hover{
+
+.forget label a:hover {
     text-decoration: underline;
 }
-button{
+
+button {
     width: 100%;
     height: 40px;
     border-radius: 40px;
@@ -100,26 +118,108 @@ button{
     font-size: 1em;
     font-weight: 600;
 }
-.register{
+
+.register {
     font-size: .9em;
     color: #fff;
     text-align: center;
     margin: 25px 0 10px;
 }
-.register p a{
+
+.register p a {
     text-decoration: none;
     color: #fff;
     font-weight: 600;
 }
-.register p a:hover{
+
+.register p a:hover {
     text-decoration: underline;
 }
+
 .error-message {
     font-size: .9em;
-    color: #ff5733; /* Màu đỏ nổi bật cho thông báo lỗi */
+    color: #ff5733;
     text-align: center;
     margin-bottom: 15px;
     background-color: rgba(255, 255, 255, 0.2);
     padding: 8px;
     border-radius: 5px;
+}
+
+/* Styles for Dashboard */
+.dashboard-container {
+    width: 80%; /* Tăng chiều rộng để chứa bảng */
+    max-width: 900px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin: 20px auto;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.logout-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-link:hover {
+    background-color: #5a6268;
+}
+
+.requests-list {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.pending {
+    background-color: #fff3cd; /* Vàng nhạt */
+}
+
+.approved {
+    background-color: #d4edda; /* Xanh lá nhạt */
+}
+
+td button {
+    width: auto;
+    height: auto;
+    padding: 8px 12px;
+    font-size: 0.9em;
 }
