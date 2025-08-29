@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bảng Điều Khiển</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <meta http-equiv="refresh" content="30"> </head>
 <body>
     <div class="dashboard-container">
         <h1>Bảng Điều Khiển</h1>
@@ -13,28 +13,43 @@
         <a href="{{ url_for('logout') }}" class="logout-link">Đăng xuất</a>
         
         <div class="requests-list">
-            <h2>Danh Sách Yêu Cầu</h2>
-            {% if requests %}
-            <ul>
-            {% for req in requests %}
-                <li class="request-item {% if req['status'] == 'approved' %}approved{% else %}pending{% endif %}">
-                    <span class="request-info">ID: {{ req['id'] }} | Trạng thái: {{ req['status'] }}</span>
-                    <span class="request-time">Thời gian: {{ req['created_at'].strftime('%Y-%m-%d %H:%M:%S') }}</span>
-                    {% if req['status'] == 'pending' %}
-                        <button onclick="approveRequest({{ req['id'] }})">Duyệt</button>
-                    {% endif %}
-                </li>
-            {% endfor %}
-            </ul>
+            <h2>Danh Sách Kết Nối</h2>
+            {% if clients %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Máy</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian gửi</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for client_id, client in clients.items() %}
+                    <tr class="{{ 'approved' if client.status == 'approved' else 'pending' }}">
+                        <td>{{ client_id }}</td>
+                        <td>{{ client.status }}</td>
+                        <td>{{ client.last_seen.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>
+                            {% if client.status == 'pending' %}
+                                <button onclick="approveClient('{{ client_id }}')">Duyệt</button>
+                            {% else %}
+                                <span>Đã duyệt</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
             {% else %}
-            <p>Không có yêu cầu nào.</p>
+            <p>Không có kết nối nào.</p>
             {% endif %}
         </div>
     </div>
 
     <script>
-        function approveRequest(requestId) {
-            fetch(`/api/approve/${requestId}`, {
+        function approveClient(clientId) {
+            fetch(`/api/approve/${clientId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
