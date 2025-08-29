@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for client_id, client in clients.items() %}
+                {% for client_id, client in clients %}
                     <tr class="{{ 'approved' if client.status == 'approved' else 'pending' }}">
                         <td>{{ client_id }}</td>
                         <td>{{ client.status }}</td>
