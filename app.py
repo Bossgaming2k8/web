@@ -1,8 +1,10 @@
 import os
+import time
+import json
+from datetime import datetime
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import time
-from datetime import datetime
+import secrets
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'default_secret_key'
@@ -23,14 +25,15 @@ def load_user(user_id):
         return User(user_id)
     return None
 
-# Biến toàn cục để lưu trữ khóa
-current_key = "defaultkey12345678901234" # Khóa mặc định ban đầu
-key_approval_status = "pending"
+# Biến toàn cục để lưu trữ thông tin client
+clients = {}
 
+# Route cho trang đăng nhập (giữ nguyên)
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
+    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -45,45 +48,60 @@ def login():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    global key_approval_status, current_key
-    # Dữ liệu hiển thị trên dashboard
-    dashboard_data = {
-        'status': key_approval_status,
-        'key': current_key,
-        'last_updated': datetime.now()
-    }
-    return render_template('dashboard.html', data=dashboard_data)
+    # Sắp xếp client theo thời gian mới nhất
+    sorted_clients = sorted(clients.values(), key=lambda c: c['last_seen'], reverse=True)
+    return render_template('dashboard.html', clients=sorted_clients)
 
-# API để A1 lấy khóa
-@app.route('/api/get_key', methods=['GET'])
-def get_key():
-    global key_approval_status
-    # Kiểm tra trạng thái phê duyệt. Nếu được duyệt, gửi khóa về
-    if key_approval_status == "approved":
-        key_to_send = current_key
-        key_approval_status = "pending" # Reset trạng thái sau khi gửi
-        return jsonify({'key': key_to_send})
+# API để client gửi yêu cầu (đã thay đổi)
+@app.route('/api/request_run', methods=['POST'])
+def request_run():
+    data = request.json
+    client_id = data.get('client_id')
     
-    return jsonify({'status': 'waiting_for_approval'})
+    if not client_id:
+        return jsonify({'message': 'Client ID bị thiếu.'}), 400
+        
+    if client_id not in clients:
+        # Nếu là client mới, tạo key và IV duy nhất
+        key = secrets.token_bytes(32) # Khóa 256-bit
+        iv = secrets.token_bytes(16)  # IV 128-bit
+        clients[client_id] = {
+            'status': 'pending',
+            'last_seen': datetime.now(),
+            'key': key.hex(),
+            'iv': iv.hex()
+        }
+    else:
+        # Nếu là client cũ, cập nhật thời gian
+        clients[client_id]['last_seen'] = datetime.now()
+        clients[client_id]['status'] = 'pending'
+    
+    return jsonify({'message': 'Yêu cầu đã được gửi.'})
 
-# API để A1 gửi khóa mới lên
-@app.route('/api/send_key', methods=['POST'])
-def send_key():
-    global current_key, key_approval_status
-    new_key = request.form.get('key')
-    if new_key:
-        current_key = new_key
-        key_approval_status = "pending" # Đợi người dùng phê duyệt khóa mới
-        return jsonify({'message': 'Khoa moi da duoc gui va dang cho phe duyet.'})
-    return jsonify({'message': 'Khong co khoa duoc gui.'}), 400
+# API để client lấy key giải mã
+@app.route('/api/get_key/<string:client_id>', methods=['GET'])
+def get_key(client_id):
+    client = clients.get(client_id)
+    if not client:
+        return jsonify({'message': 'Client không tồn tại.'}), 404
+        
+    if client['status'] == 'approved':
+        return jsonify({
+            'key': client['key'],
+            'iv': client['iv']
+        })
+    return jsonify({'message': 'Chưa được phê duyệt.'}), 403
 
-# API để duyệt khóa
-@app.route('/api/approve_key', methods=['POST'])
+# API để duyệt yêu cầu (đã thay đổi)
+@app.route('/api/approve/<string:client_id>', methods=['POST'])
 @login_required
-def approve_key():
-    global key_approval_status
-    key_approval_status = "approved"
-    return jsonify({'message': 'Khoa da duoc phe duyet. A1 co the lay duoc.'})
+def approve_request(client_id):
+    client = clients.get(client_id)
+    if not client:
+        return jsonify({'message': 'Client không tồn tại.'}), 404
+        
+    client['status'] = 'approved'
+    return jsonify({'message': 'Yêu cầu đã được duyệt.'})
 
 @app.route('/logout')
 @login_required
