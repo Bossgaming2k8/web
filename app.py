@@ -28,7 +28,7 @@ def load_user(user_id):
 # Biến toàn cục để lưu trữ thông tin client
 clients = {}
 
-# Route cho trang đăng nhập (giữ nguyên)
+# Route cho trang đăng nhập
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -49,10 +49,11 @@ def login():
 @login_required
 def dashboard():
     # Sắp xếp client theo thời gian mới nhất
-    sorted_clients = sorted(clients.values(), key=lambda c: c['last_seen'], reverse=True)
-    return render_template('dashboard.html', clients=sorted_clients)
+    # clients.items() trả về một list các tuple (key, value)
+    sorted_clients_items = sorted(clients.items(), key=lambda item: item[1]['last_seen'], reverse=True)
+    return render_template('dashboard.html', clients=sorted_clients_items)
 
-# API để client gửi yêu cầu (đã thay đổi)
+# API để client gửi yêu cầu
 @app.route('/api/request_run', methods=['POST'])
 def request_run():
     data = request.json
@@ -92,7 +93,7 @@ def get_key(client_id):
         })
     return jsonify({'message': 'Chưa được phê duyệt.'}), 403
 
-# API để duyệt yêu cầu (đã thay đổi)
+# API để duyệt yêu cầu
 @app.route('/api/approve/<string:client_id>', methods=['POST'])
 @login_required
 def approve_request(client_id):
